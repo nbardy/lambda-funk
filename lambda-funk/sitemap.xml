@@ -2,7 +2,7 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url>
 <loc>
-http://lambdafunk.com/blog/tags-output/clojure/index.html
+http://lambdafunk.com/lambda-funk/tags-output/clojure/index.html
 </loc>
 <lastmod>
 2017-01-31
@@ -10,7 +10,7 @@ http://lambdafunk.com/blog/tags-output/clojure/index.html
 </url>
 <url>
 <loc>
-http://lambdafunk.com/blog/404.html
+http://lambdafunk.com/lambda-funk/404.html
 </loc>
 <lastmod>
 2017-01-31
@@ -18,7 +18,7 @@ http://lambdafunk.com/blog/404.html
 </url>
 <url>
 <loc>
-http://lambdafunk.com/blog/index.html
+http://lambdafunk.com/lambda-funk/index.html
 </loc>
 <lastmod>
 2017-01-31
@@ -26,7 +26,7 @@ http://lambdafunk.com/blog/index.html
 </url>
 <url>
 <loc>
-http://lambdafunk.com/blog/posts-output/2016-01-31-why-clojure/index.html
+http://lambdafunk.com/lambda-funk/posts-output/2016-01-31-why-clojure/index.html
 </loc>
 <lastmod>
 2017-01-31
@@ -34,7 +34,7 @@ http://lambdafunk.com/blog/posts-output/2016-01-31-why-clojure/index.html
 </url>
 <url>
 <loc>
-http://lambdafunk.com/blog/archives/index.html
+http://lambdafunk.com/lambda-funk/archives/index.html
 </loc>
 <lastmod>
 2017-01-31
@@ -42,7 +42,7 @@ http://lambdafunk.com/blog/archives/index.html
 </url>
 <url>
 <loc>
-http://lambdafunk.com/blog/tags/index.html
+http://lambdafunk.com/lambda-funk/tags/index.html
 </loc>
 <lastmod>
 2017-01-31
@@ -50,7 +50,7 @@ http://lambdafunk.com/blog/tags/index.html
 </url>
 <url>
 <loc>
-http://lambdafunk.com/blog/authors-output/Nicholas Bardy/index.html
+http://lambdafunk.com/lambda-funk/authors-output/Nicholas Bardy/index.html
 </loc>
 <lastmod>
 2017-01-31
@@ -58,7 +58,7 @@ http://lambdafunk.com/blog/authors-output/Nicholas Bardy/index.html
 </url>
 <url>
 <loc>
-http://lambdafunk.com/blog/pages-output/about/index.html
+http://lambdafunk.com/lambda-funk/pages-output/about/index.html
 </loc>
 <lastmod>
 2017-01-31
