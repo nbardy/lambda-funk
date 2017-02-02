@@ -207,3 +207,7 @@ pre, code, .hljs {
 #email::after {
     content: "@gmail.com";
 }
+
+.CodeMirror {
+  font-size: 12px;
+}
