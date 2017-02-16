@@ -1,0 +1,20 @@
+Blog post about rules on how to design data specifications in non complex/complecting ways with examples 
+
+De-duplicate data(data in one place)
+
+First example
+Message sending
+Person 
+:name
+:messages-recieved
+:messages-sent
+
+vs 
+
+Messages
+:persons-involved
+
+We can give two names to one spec
+Let's not give two specs to one name
+
+

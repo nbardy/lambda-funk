@@ -132,7 +132,11 @@ pre code {
 }
 
 code {
-    color: #428bca;
+    color: #555;
+    font-family:monospace;
+    font-size: 16px;
+    background-color: #ddd !important;
+    border-radius: 0;
 }
 
 pre, code, .hljs {
@@ -211,3 +215,9 @@ pre, code, .hljs {
 .CodeMirror {
   font-size: 12px;
 }
+
+.code-output {
+    height: 20px;
+    display: inline-block;
+}
+
