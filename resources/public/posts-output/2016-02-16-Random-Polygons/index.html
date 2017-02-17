@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <title>Lambda Funk: Random Polygons</title>
-    <link rel="canonical" href="http://lambdafunk.com/posts-output/2016-02-14-Random-Polygons/">
+    <link rel="canonical" href="http://lambdafunk.com/posts-output/2016-02-16-Random-Polygons/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet'
           type='text/css'>
@@ -57,7 +57,7 @@
     </div>
     <h2>Random Polygons</h2>
         <div id="post-date">
-            February 14, 2016
+            February 16, 2016
         </div>
 </div>
 <div>
@@ -114,7 +114,7 @@
  </code></pre> </div> <canvas width="400" height="200" id="canvas-4"></canvas></p><p>Or render a few!</p><p><div class="language-klipse" data-preamble="(reset-canvas! 5)"><pre><code class="clojure">&#40;render-polygon! &#40;regular-polygon 9&#41;              {:color &quot;green&quot;}&#41;
 &#40;render-polygon! &#40;regular-polygon 5 &#91;260 50&#93;  50&#41; {:color &quot;red&quot;}&#41;
 &#40;render-polygon! &#40;regular-polygon 3 &#91;310 130&#93; 40&#41; {:color &quot;blue&quot;}&#41;
- </code></pre> </div> <canvas width="400" height="200" id="canvas-5"></canvas></p><p>Now to make a random polygon. Take that regular one and add some random noise. We'll modify the original function to add some randomness to the radius and theta. But only enough so the points don't overlap avoid <a href='https://en.wikipedia.org/wiki/Complex_polygon'>complex</a> polygons.</p><p><div class="language-klipse" data-preamble="(reset-canvas! 6)"><pre><code class="clojure">&#40;defn random-polar-polygon &#91;edges radius&#93;
+ </code></pre> </div> <canvas width="400" height="200" id="canvas-5"></canvas></p><p>Now to make a random polygon. Take that regular one and add some random noise. We'll modify the original function to add some randomness to the radius and theta. But only enough so the points don't overlap avoiding <a href='https://en.wikipedia.org/wiki/Complex_polygon'>complex</a> polygons.</p><p><div class="language-klipse" data-preamble="(reset-canvas! 6)"><pre><code class="clojure">&#40;defn random-polar-polygon &#91;edges radius&#93;
   &#40;let &#91;angle-increment &#40;/ &#40;&#42; 2 js/Math.PI&#41; edges&#41;&#93;
     &#40;mapv 
       &#40;fn &#91;edge&#93; 
@@ -131,7 +131,7 @@
 &#40;render-polygon! &#40;random-polygon 9&#41;               {:color &quot;green&quot;}&#41;
 &#40;render-polygon! &#40;random-polygon 7  &#91;260 50&#93;  50&#41; {:color &quot;red&quot;}&#41;
 &#40;render-polygon! &#40;random-polygon 13 &#91;310 130&#93; 40&#41; {:color &quot;blue&quot;}&#41;
- </code></pre> </div> <canvas width="400" height="200" id="canvas-6"></canvas></p><p>Hmm... Too pointy. It would be better if the shapes were a little closer to their regular self. Adjusting the distribution and not the range will allow us to continue generating a wide set of polygons, but make it more likely to generate polygons seen in the real world. The power function map values <code>&#91;0,1&#93; =&gt; &#91;0,1&#93;</code> and can be tuned to adjust the distribute based of the second argument. Using this we can generate a more standard looking set of polygons.</p><p><div class="language-klipse" data-preamble="(reset-canvas! 7)"><pre><code class="clojure">&#40;defn random-polar-polygon &#91;edges radius&#93;
+ </code></pre> </div> <canvas width="400" height="200" id="canvas-6"></canvas></p><p>Hmm... Too pointy. It would be better if the shapes were a little closer to their regular self. Adjusting the distribution and not the range will allow us to continue generating a wide set of polygons, but make it more likely to generate polygons seen in the real world. The <code>pow</code> function map values <code>&#91;0,1&#93; =&gt; &#91;0,1&#93;</code> when applied to the uniform random distribution provides a skew. Using this we can skew our random noise to generate a more standard looking set of polygons.</p><p><div class="language-klipse" data-preamble="(reset-canvas! 7)"><pre><code class="clojure">&#40;defn random-polar-polygon &#91;edges radius&#93;
   &#40;let &#91;radius-damper 0.34
         angle-damper  1.22
         angle-increment &#40;/ &#40;&#42; 2 js/Math.PI&#41; edges&#41;&#93;

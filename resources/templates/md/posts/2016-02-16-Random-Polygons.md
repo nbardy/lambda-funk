@@ -91,7 +91,7 @@ Or render a few!
 </div>
 <canvas width="400" height="200" id="canvas-5"></canvas>
 
-Now to make a random polygon. Take that regular one and add some random noise. We'll modify the original function to add some randomness to the radius and theta. But only enough so the points don't overlap avoid [complex](https://en.wikipedia.org/wiki/Complex_polygon) polygons.
+Now to make a random polygon. Take that regular one and add some random noise. We'll modify the original function to add some randomness to the radius and theta. But only enough so the points don't overlap avoiding [complex](https://en.wikipedia.org/wiki/Complex_polygon) polygons.
 
 <div class="language-klipse" data-preamble="(reset-canvas! 6)">
 ```clojure
@@ -116,7 +116,7 @@ Now to make a random polygon. Take that regular one and add some random noise. W
 </div>
 <canvas width="400" height="200" id="canvas-6"></canvas>
 
-Hmm... Too pointy. It would be better if the shapes were a little closer to their regular self. Adjusting the distribution and not the range will allow us to continue generating a wide set of polygons, but make it more likely to generate polygons seen in the real world. The power function map values `[0,1] => [0,1]` and can be tuned to adjust the distribute based of the second argument. Using this we can generate a more standard looking set of polygons.
+Hmm... Too pointy. It would be better if the shapes were a little closer to their regular self. Adjusting the distribution and not the range will allow us to continue generating a wide set of polygons, but make it more likely to generate polygons seen in the real world. The `pow` function map values `[0,1] => [0,1]` when applied to the uniform random distribution provides a skew. Using this we can skew our random noise to generate a more standard looking set of polygons.
 
 <div class="language-klipse" data-preamble="(reset-canvas! 7)">
 ```clojure
