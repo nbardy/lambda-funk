@@ -2,6 +2,8 @@
  :layout :post
  :tags  ["clojure" "interactive" "visual"]}
 
+**All codes samples are live and editable**
+
 I was working on another blog post involving polygons and realized how nice it would be to have some random polygons to test with. Turns out its a interesting little problem and now its become a post of its own.
 <pre style="display:none">
 <div class="language-klipse">
@@ -52,7 +54,6 @@ Let's start with generating a regular polygon. This is a perfect problem for pol
 </div>
 
 It works, but most graphics programs work with rectangular coordinates. Let's write a quick function to transform polar polygons to rectangular polygons with their center at point `[x y]`.
-
 <div class="language-klipse">
 ```clojure
 (defn to-rect 

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Lambda Funk: Interpolating Polygons</title>
+    <link rel="canonical" href="http://lambdafunk.com/posts-output/2016-02-14-Interpolating-Polygons/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='http://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet'
+          type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.7.0/styles/default.min.css">
+    <link href="/css/screen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+<nav class="navbar navbar-default">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <img src="/img/funky-lambda.svg"></img>
+    <a class="navbar-title" href="/">Lambda Funk</a>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li ><a href="/">Home</a></li>
+      <li
+                                                      ><a href="/archives/">Archives</a></li>
+      
+      <li
+                                                                                                      >
+        <a href="/pages-output/about/">About</a>
+      </li>
+      
+    </ul>
+  </div><!--/.nav-collapse -->
+  <!--/.container-fluid -->
+</nav>
+
+
+<div >
+
+
+    <div >
+        <div >
+            <div id="content">
+                
+<div id="post">
+    <div class="post-header">
+    <div id="post-meta" class="row">
+        
+    </div>
+    <h2>Interpolating Polygons</h2>
+        <div id="post-date">
+            February 14, 2016
+        </div>
+</div>
+<div>
+    
+    <p><strong>All codes samples are live and editable</strong></p><p>In writing a library for animation I stumbled upon the problem of how to animate polygons. Trying to create animations like this:</p><p><canvas width="200" height="200" id="canvas-0"></canvas></p><p>Generating an animation given an initial and final value relies on <a href='http://en.wikipedia.org/wiki/Interpolation'>interpolation</a> to find the intermediary values. Interpolation is simple when working with simple values like numbers, but becomes more complex as the data being interpolated becomes more complex. Polygons contain some features which make interpolating them a little interesting.</p><p><pre style="display:none"> <div class="language-klipse"><pre><code class="clojure">&#40;def canvas &#40;atom 0&#41;&#41;
+&#40;defn get-canvas &#91;id&#93;
+  &#40;js/document.getElementById &#40;str &quot;canvas-&quot; id&#41;&#41;&#41;
+
+&#40;defn clear-canvas! &#91;canvas-id&#93;
+  &#40;let &#91;canvas &#40;get-canvas canvas-id&#41;
+        context &#40;.getContext canvas &quot;2d&quot;&#41;&#93;
+    &#40;.clearRect context 0 0 &#40;.-width canvas&#41; 
+                            &#40;.-height canvas&#41;&#41;&#41;&#41;
+
+&#40;defn reset-canvas! &#91;canvas-id&#93;
+  &#40;reset! canvas canvas-id&#41;
+  &#40;clear-canvas! canvas-id&#41;&#41;
+
+&#40;defn render-polygon! 
+ &#40;&#91;polygon&#93; &#40;render-polygon! @canvas polygon {}&#41;&#41;
+ &#40;&#91;polygon opts&#93; &#40;render-polygon! @canvas polygon opts&#41;&#41;
+ &#40;&#91;canvas-id polygon {:keys &#91;color&#93; :or {color &quot;blue&quot;}}&#93;
+  &#40;let &#91;canvas &#40;get-canvas canvas-id&#41;
+        &#91;&#91;initial-x initial-y&#93; &amp; rest&#93; polygon
+        context &#40;.getContext canvas &quot;2d&quot;&#41;&#93;
+        &#40;doto context
+          &#40;aset &quot;fillStyle&quot; color&#41;
+          &#40;.beginPath&#41;
+          &#40;.moveTo context initial-x initial-y&#41;&#41;
+        &#40;doseq &#91;&#91;x y&#93; rest&#93;
+          &#40;.lineTo context x y&#41;&#41;
+        &#40;doto context
+          &#40;.lineTo initial-x initial-y&#41;
+          &#40;.fill&#41;&#41;&#41;&#41;&#41;
+
+&#40;def animation-duration 1000&#41;
+&#40;def pre-pause 500&#41;
+&#40;def post-pause 500&#41;
+
+&#40;defn get-time &#91;&#93; &#40;js/Date.now&#41;&#41;
+
+&#40;def animations &#40;atom {}&#41;&#41;
+
+&#40;defn animate
+  &#40;&#91;initial final interpolation-fn&#93; 
+    ; Mark animation for canvas 
+
+    &#40;swap! animations assoc @canvas &#91;initial final interpolation-fn&#93;&#41;
+    &#40;render-polygon! @canvas &#40;interpolation-fn 0 initial final&#41; {}&#41;
+    &#40;animate initial final interpolation-fn &#40;get-time&#41; @canvas&#41;
+    initial&#41;
+  &#40;&#91;initial final interpolation-fn start-time canvas-id&#93;
+    &#40;let &#91;total-time &#40;+ pre-pause post-pause animation-duration&#41;
+          p 
+          &#40;-&gt; &#40;get-time&#41; &#40;- start-time&#41; 
+              &#40;mod total-time&#41;
+              &#40;- pre-pause&#41;
+              &#40;/ animation-duration&#41;
+              &#40;max 0&#41; &#40;min 1&#41;&#41;&#93;
+    &#40;clear-canvas! canvas-id&#41;
+    &#40;render-polygon! canvas-id &#40;interpolation-fn p initial final&#41; {}&#41;
+    ; Do not repeat animation if a new one has been started
+    &#40;if &#40;= &#40;get @animations canvas-id&#41; &#91;initial final interpolation-fn&#93;&#41;
+      &#40;js/requestAnimationFrame 
+        &#40;fn &#91;&#95;&#93; &#40;animate initial final interpolation-fn start-time canvas-id&#41;&#41;&#41;&#41;&#41;&#41;&#41;
+
+&#40;defn to-rect 
+  &#40;&#91;&#91;theta radius&#93;&#93; &#40;to-rect &#91;0 0&#93; &#91;theta radius&#93;&#41;&#41;
+  &#40;&#91;&#91;x y&#93; &#91;theta radius&#93;&#93;
+    &#91;&#40;+ x &#40;&#42; radius &#40;js/Math.cos theta&#41;&#41;&#41;
+     &#40;+ y &#40;&#42; radius &#40;js/Math.sin theta&#41;&#41;&#41;&#93;&#41;&#41;
+
+&#40;defn rect 
+  &#40;&#91;width height&#93; &#40;rect 0 0 width height&#41;&#41;
+  &#40;&#91;x y width height&#93;
+    &#91;&#91;x y&#93;          
+    &#91;&#40;+ x width&#41; y&#93; 
+    &#91;&#40;+ x width&#41; &#40;+ y height&#41;&#93; 
+    &#91;x &#40;+ y height&#41;&#93;&#93;&#41;&#41;
+
+&#40;defn random-polar-polygon &#91;edges radius&#93;
+  &#40;let &#91;radius-damper 0.34
+        angle-damper  1.22
+        angle-increment &#40;/ &#40;&#42; 2 js/Math.PI&#41; edges&#41;&#93;
+    &#40;mapv 
+      &#40;fn &#91;edge&#93; 
+        &#91;&#40;+ &#40;&#42; angle-increment edge&#41; 
+            &#40;&#42; &#40;js/Math.pow &#40;rand&#41; angle-damper&#41; angle-increment&#41;&#41;
+         &#40;&#42; &#40;js/Math.pow &#40;rand&#41; radius-damper&#41; radius&#41;&#93;&#41;
+      &#40;range edges&#41;&#41;&#41;&#41;
+
+&#40;defn random-polygon 
+  &#40;&#91;n&#93; &#40;random-polygon n 100&#41;&#41;
+  &#40;&#91;n radius&#93; &#40;random-polygon n &#91;radius radius&#93; radius&#41;&#41;
+  &#40;&#91;n center radius&#93; 
+    &#40;mapv &#40;partial to-rect center&#41; &#40;random-polar-polygon n radius&#41;&#41;&#41;&#41;
+
+ </code></pre> </div> </pre></p><p>An interpolation function will have the arguments <code>initial</code>, <code>final</code>, and <code>p</code>. Where <code>p</code> indicates the position of the value being returned. <code>p</code> is the distance from our intial value of the value being returned. Where <code>p=0</code> returns the intial value, and <code>p=1</code> indicates the final value. In mathmatical notation that is: </p><p><code>V = Vinitial&#42;&#40;1-p&#41; + Vfinal&#42;p</code></p><p>Starting with the simplest case, consisting of two equal sized polygons. The problem can be broken down into interpolating a series of points. Each point can be broken down into interpolating two numbers.</p><p><div class="language-klipse"><pre><code class="clojure">&#40;defn interpolate-number  &#91;p initial final&#93;
+  &#40;+ &#40;&#42; initial &#40;- 1 p&#41;&#41; &#40;&#42; final p&#41;&#41;&#41;
+
+&#40;defn interpolate-points &#91;p initial-point final-point&#93;
+  &#40;mapv &#40;partial interpolate-number p&#41;
+    initial-point final-point&#41;&#41;
+
+&#40;interpolate-points 0.5 &#91;0 0&#93; &#91;10 10&#93;&#41;
+ </code></pre> </div></p><p>Mapping over polygons gives the interpolation function as demonstrated with a quick test using some rectangles.</p><p><div class="language-klipse"><pre><code class="clojure">&#40;defn interpolate-polygons &#91;p initial final&#93;
+  &#40;mapv &#40;partial interpolate-points p&#41; initial final&#41;&#41;
+
+&#40;interpolate-polygons 0.5 &#40;rect 0 0 10 10&#41; &#40;rect 20 0 10 10&#41;&#41;
+ </code></pre> </div></p><p>Along with a rendering to make things more clear. With each polygon as a different color to distinguish them from each other. Notice the polygon is in between the other two by size and position.</p><p><div class="language-klipse" data-preamble="(reset! canvas 4)"><pre><code class="clojure">&#40;let &#91;rect-1 &#40;rect 0 0 30 30&#41;
+      rect-2 &#40;rect 200 0 60 60&#41;&#93;
+&#40;render-polygon! rect-1 {:color &quot;red&quot;}&#41;
+&#40;render-polygon! &#40;interpolate-polygons 0.5 rect-1 rect-2&#41; {:color &quot;green&quot;}&#41;
+&#40;render-polygon! rect-2 {:color &quot;blue&quot;}&#41;&#41;
+
+ </code></pre> </div> <canvas width="400" height="50" id="canvas-4"></canvas></p><p>Now let's look at this in the context of an animation. The animate function will render interpolated polygons for values <code>p = &#91;0,1&#93;</code>. <div class="language-klipse" data-preamble="(reset-canvas! 6)" data-eval-idle-msec="500"><pre><code class="clojure">&#40;animate &#40;rect 0 0 100 100&#41; &#40;rect 0 0 200 200&#41; interpolate-polygons&#41;
+ </code></pre> </div> <canvas width="400" height="200" id="canvas-6"></canvas></p><p>Another example making use of a random polygon function written in an <a href='http://lambdafunk.com/posts-output/2016-02-16-Random-Polygons'>earlier blog post</a>. <div class="language-klipse" data-preamble="(reset-canvas! 7)" data-eval-idle-msec="500"><pre><code class="clojure">&#40;animate &#40;random-polygon 5&#41; &#40;random-polygon 5&#41; interpolate-polygons&#41;
+ </code></pre> </div> <canvas width="400" height="200" id="canvas-7"></canvas></p><p>As shown, interpolating polygons with the same number of points is straightforward. More interesting is developing a method for polygons of unequal sides. Adding points to the polygon with the lesser points allows reuse of the previous function. As long as the point added to the polygon are added are on the edges it will not change the shape of the original polygon until it becomes animated.</p><p>Using a higher-order function we can test this interpolation with a number of different approachs to resizing a polygon. Starting with a very simple approach of copying the last point as many times as needed.</p><p><div class="language-klipse" data-preamble="(reset-canvas! 8)" data-eval-idle-msec="500"><pre><code class="clojure">&#40;defn fixed-interpolation-fn &#91;resize&#93;
+  &#40;fn &#91;p initial final&#93;
+    &#40;let &#91;size &#40;max &#40;count initial&#41; &#40;count final&#41;&#41;&#93;
+      &#40;interpolate-polygons p 
+        &#40;resize initial size&#41; 
+        &#40;resize final   size&#41;&#41;&#41;&#41;&#41;
+
+&#40;defn copy-last-point &#91;points n&#93;
+  &#40;take n &#40;concat points &#40;repeat &#40;last points&#41;&#41;&#41;&#41;&#41;
+
+&#40;animate &#40;random-polygon 7&#41;
+         &#40;random-polygon 13&#41;
+         &#40;fixed-interpolation-fn copy-last-point&#41;&#41;
+
+ </code></pre> </div> <canvas width="400" height="250" id="canvas-8"></canvas></p><p>An interesting looking effect, but the points unfurling from one location doesn't have a natural animation feel. What does it look like if we repeat the points circularly and take as many as we need?</p><p><div class="language-klipse" data-preamble="(reset-canvas! 9)" data-eval-idle-msec="500"><pre><code class="clojure">
+&#40;defn circular-resize &#91;points n&#93;
+  &#40;-&gt;&gt; &#40;repeat points&#41;
+       &#40;mapcat identity&#41;
+       &#40;take n&#41;&#41;&#41;
+
+&#40;animate &#40;random-polygon 5&#41;
+         &#40;random-polygon 13&#41;
+         &#40;fixed-interpolation-fn circular-resize&#41;&#41;
+ </code></pre> </div> <canvas width="400" height="250" id="canvas-9"></canvas></p><p>Even more interesting, it unfurls and crosses inside itself, but it looks even less organic. What's needed is a method to distribute the points across the polygon evenly. This can be done by creating a new polygon and getting the value for each point by accessing the corresponding index of the old polygon.</p><p><div class="language-klipse" data-preamble="(reset-canvas! 10)" data-eval-idle-msec="500"><pre><code class="clojure">&#40;defn dispersed-resize &#91;points new-size&#93;
+  &#40;let &#91;old-size &#40;count points&#41;
+        new-polygon-indices &#40;range 0 old-size &#40;/ old-size new-size&#41;&#41;&#93;
+    &#40;mapv #&#40;get points &#40;mod &#40;js/Math.round %&#41; old-size&#41;&#41; 
+      new-polygon-indices&#41;&#41;&#41;
+
+&#40;animate &#40;random-polygon 5&#41;
+         &#40;random-polygon 13&#41;
+         &#40;fixed-interpolation-fn dispersed-resize&#41;&#41;
+ </code></pre> </div> <canvas width="400" height="250" id="canvas-10"></canvas></p><p>Much better, the only problem remaining is we are still copying points and not adding new ones. This leads to the visual effect of points growing out of each other. Much nicer would be if the new points were placed somewhere between the old points, somewhere on the edge. Looking at the original function the culprit is using <code>round</code>. It is throwing away data that could be used. Using the non-integer value to find a new point interpolated between its neighbors should help accomplish this goal.</p><p><div class="language-klipse" data-preamble="(reset-canvas! 11)" data-eval-idle-msec="500"><pre><code class="clojure">&#40;defn get-interpolated &#91;points index&#93; 
+  &#40;interpolate-points &#40;mod index 1&#41; 
+    &#40;get points &#40;js/Math.floor index&#41;&#41;
+    &#40;get points &#40;mod &#40;js/Math.ceil index&#41; &#40;count points&#41;&#41; 
+         &#40;last points&#41;&#41;&#41;&#41;
+
+&#40;defn resize-polygon &#91;points final-size&#93;
+  &#40;let &#91;initial-size &#40;count points&#41;
+        initial-indices &#40;range initial-size&#41;
+        additional-points &#40;- final-size initial-size&#41;
+        new-indices 
+        &#40;take additional-points
+        &#40;range &#40;/ initial-size final-size&#41; 
+               js/Infinity &#40;/ initial-size additional-points&#41;&#41;&#41;&#93;
+        &#40;-&gt;&gt; initial-indices
+             &#40;concat new-indices&#41;
+             &#40;sort&#41;
+             &#40;mapv &#40;partial get-interpolated points&#41;&#41;&#41;&#41;&#41;
+
+&#40;animate &#40;random-polygon 4&#41;
+         &#40;random-polygon 7&#41;
+         &#40;fixed-interpolation-fn resize-polygon&#41;&#41;
+
+ </code></pre> </div> <canvas width="400" height="250" id="canvas-11"></canvas></p><p>Looks good! There is definitely more you could do with the algorithm, but for now that's enough. Hope you enjoyed.</p><p><pre style="display:none"> <div class="language-klipse" data-preamble="(reset-canvas! 0)" data-eval-idle-msec="500"><pre><code class="clojure">&#40;animate &#40;random-polygon 3&#41;
+         &#40;random-polygon 5&#41;
+         &#40;fixed-interpolation-fn resize-polygon&#41;&#41;
+ </code></pre> </div> </pre></p><p><link rel="stylesheet" type="text/css" href="http://app.klipse.tech/css/codemirror.css">  </link></p><p><script> window.klipse_settings = { selector: ".language-klipse" }; </script> <script src="http://app.klipse.tech/plugin/js/klipse_plugin.js"></script></p>
+</div>
+
+<div id="post-tags">
+    <b>Tags: </b>
+    
+    <a href="/tags-output/interactive/">interactive</a>
+    
+    <a href="/tags-output/clojure/">clojure</a>
+    
+    <a href="/tags-output/math/">math</a>
+    
+    <a href="/tags-output/visual/">visual</a>
+    
+</div>
+
+
+    <div id="prev-next">
+        
+        <a href="/posts-output/2016-02-16-Random-Polygons/">&laquo; Random Polygons</a>
+        
+        
+        <a class="right" href="/posts-output/2016-01-31-why-clojure/">Why Clojure? &raquo;</a>
+        
+    </div>
+
+    
+</div>
+
+            </div>
+        </div>
+
+        <div >
+        </div>
+    </div>
+    <footer>Copyright &copy; 2017 Nicholas Bardy
+        <p style="text-align: center;">Powered by <a href="http://cryogenweb.org">Cryogen</a></p></footer>
+</div>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="/js/highlight.pack.js" type="text/javascript"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>
