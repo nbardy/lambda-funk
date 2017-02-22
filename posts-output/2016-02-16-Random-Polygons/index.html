@@ -62,7 +62,7 @@
 </div>
 <div>
     
-    <p>I was working on another blog post involving polygons and realized how nice it would be to have some random polygons to test with. Turns out its a interesting little problem and now its become a post of its own. <pre style="display:none"> <div class="language-klipse"><pre><code class="clojure">&#40;def canvas &#40;atom 0&#41;&#41;
+    <p><strong>All codes samples are live and editable</strong></p><p>I was working on another blog post involving polygons and realized how nice it would be to have some random polygons to test with. Turns out its a interesting little problem and now its become a post of its own. <pre style="display:none"> <div class="language-klipse"><pre><code class="clojure">&#40;def canvas &#40;atom 0&#41;&#41;
 &#40;defn get-canvas &#91;id&#93;
   &#40;js/document.getElementById &#40;str &quot;canvas-&quot; @canvas&#41;&#41;&#41;
 
@@ -97,7 +97,7 @@
     &#40;range edges&#41;&#41;&#41;
 
 &#40;polar-polygon 5 70&#41;
- </code></pre> </div></p><p>It works, but most graphics programs work with rectangular coordinates. Let's write a quick function to transform polar polygons to rectangular polygons with their center at point <code>&#91;x y&#93;</code>.</p><p><div class="language-klipse"><pre><code class="clojure">&#40;defn to-rect 
+ </code></pre> </div></p><p>It works, but most graphics programs work with rectangular coordinates. Let's write a quick function to transform polar polygons to rectangular polygons with their center at point <code>&#91;x y&#93;</code>. <div class="language-klipse"><pre><code class="clojure">&#40;defn to-rect 
   &#40;&#91;&#91;theta radius&#93;&#93; &#40;to-rect &#91;0 0&#93; &#91;theta radius&#93;&#41;&#41;
   &#40;&#91;&#91;x y&#93; &#91;theta radius&#93;&#93;
     &#91;&#40;+ x &#40;&#42; radius &#40;js/Math.cos theta&#41;&#41;&#41;
@@ -163,7 +163,7 @@
     <div id="prev-next">
         
         
-        <a class="right" href="/posts-output/2016-01-31-why-clojure/">Why Clojure? &raquo;</a>
+        <a class="right" href="/posts-output/2016-02-14-Interpolating-Polygons/">Interpolating Polygons &raquo;</a>
         
     </div>
 
