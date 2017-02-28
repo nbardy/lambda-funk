@@ -2,7 +2,7 @@
  :layout :post
  :tags  ["clojure" "math" "interactive" "visual"]}
 
-**All codes samples are live and editable**
+**Code samples are live and edibtable enabled by [Klipse](app.klipse.tech)**
 
 In writing a library for animation I stumbled upon the problem of how to animate polygons. Trying to create animations like this:
 

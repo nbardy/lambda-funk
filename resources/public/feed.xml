@@ -12,7 +12,7 @@ http://lambdafunk.com/
 Programming, mostly
 </description>
 <lastBuildDate>
-Tue, 28 Feb 2017 13:13:38 -0500
+Tue, 28 Feb 2017 13:22:17 -0500
 </lastBuildDate>
 <generator>
 clj-rss
@@ -28,7 +28,7 @@ http://lambdafunk.com/2017-02-21-Interpolating-Polygons/
 Interpolating Polygons
 </title>
 <description>
-&lt;p&gt;&lt;strong&gt;All codes samples are live and editable&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;In writing a library for animation I stumbled upon the problem of how to animate polygons. Trying to create animations like this:&lt;/p&gt;&lt;p&gt;&lt;canvas width=&quot;200&quot; height=&quot;200&quot; id=&quot;canvas-0&quot;&gt;&lt;/canvas&gt;&lt;/p&gt;&lt;p&gt;Generating an animation given an initial and final value relies on &lt;a href='http://en.wikipedia.org/wiki/Interpolation'&gt;interpolation&lt;/a&gt; to find the intermediary values. Interpolation is simple when working with simple values like numbers, but becomes more complex as the data being interpolated becomes more complex. Polygons contain some features which make interpolating them a little interesting.&lt;/p&gt;&lt;p&gt;&lt;pre style=&quot;display:none&quot;&gt; &lt;div class=&quot;language-klipse&quot;&gt;&lt;pre&gt;&lt;code class=&quot;clojure&quot;&gt;&amp;#40;def canvas &amp;#40;atom 0&amp;#41;&amp;#41;
+&lt;p&gt;&lt;strong&gt;Code samples are live and edibtable enabled by &lt;a href='app.klipse.tech'&gt;Klipse&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;In writing a library for animation I stumbled upon the problem of how to animate polygons. Trying to create animations like this:&lt;/p&gt;&lt;p&gt;&lt;canvas width=&quot;200&quot; height=&quot;200&quot; id=&quot;canvas-0&quot;&gt;&lt;/canvas&gt;&lt;/p&gt;&lt;p&gt;Generating an animation given an initial and final value relies on &lt;a href='http://en.wikipedia.org/wiki/Interpolation'&gt;interpolation&lt;/a&gt; to find the intermediary values. Interpolation is simple when working with simple values like numbers, but becomes more complex as the data being interpolated becomes more complex. Polygons contain some features which make interpolating them a little interesting.&lt;/p&gt;&lt;p&gt;&lt;pre style=&quot;display:none&quot;&gt; &lt;div class=&quot;language-klipse&quot;&gt;&lt;pre&gt;&lt;code class=&quot;clojure&quot;&gt;&amp;#40;def canvas &amp;#40;atom 0&amp;#41;&amp;#41;
 &amp;#40;defn get-canvas &amp;#91;id&amp;#93;
   &amp;#40;js/document.getElementById &amp;#40;str &amp;quot;canvas-&amp;quot; id&amp;#41;&amp;#41;&amp;#41;
 
@@ -219,7 +219,7 @@ http://lambdafunk.com/2017-02-16-Random-Polygons/
 Random Polygons
 </title>
 <description>
-&lt;p&gt;&lt;strong&gt;All codes samples are live and editable&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;I was working on another blog post involving polygons and realized how nice it would be to have some random polygons to test with. Turns out its a interesting little problem and now its become a post of its own. &lt;pre style=&quot;display:none&quot;&gt; &lt;div class=&quot;language-klipse&quot;&gt;&lt;pre&gt;&lt;code class=&quot;clojure&quot;&gt;&amp;#40;def canvas &amp;#40;atom 0&amp;#41;&amp;#41;
+&lt;p&gt;&lt;strong&gt;Code samples are live and edibtable enabled by &lt;a href='app.klipse.tech'&gt;Klipse&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;I was working on another blog post involving polygons and realized how nice it would be to have some random polygons to test with. Turns out its a interesting little problem and now its become a post of its own. &lt;pre style=&quot;display:none&quot;&gt; &lt;div class=&quot;language-klipse&quot;&gt;&lt;pre&gt;&lt;code class=&quot;clojure&quot;&gt;&amp;#40;def canvas &amp;#40;atom 0&amp;#41;&amp;#41;
 &amp;#40;defn get-canvas &amp;#91;id&amp;#93;
   &amp;#40;js/document.getElementById &amp;#40;str &amp;quot;canvas-&amp;quot; @canvas&amp;#41;&amp;#41;&amp;#41;
 
