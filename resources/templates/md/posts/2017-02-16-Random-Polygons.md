@@ -2,7 +2,7 @@
  :layout :post
  :tags  ["clojure" "interactive" "visual"]}
 
-**Code samples are live and edibtable enabled by [Klipse](app.klipse.tech)**
+**Code samples are live and edibtable enabled by [Klipse](http://github.com/viebel/klipse)**
 
 I was working on another blog post involving polygons and realized how nice it would be to have some random polygons to test with. Turns out its a interesting little problem and now its become a post of its own.
 <pre style="display:none">
