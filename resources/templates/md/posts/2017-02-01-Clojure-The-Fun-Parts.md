@@ -7,8 +7,8 @@ Clojure, the fun parts
 ======================
 
 Why this tutorial?
-As the title of the most famous clojure book, [The Joy of Clojure](http://www.amazon.com/The-Joy-Clojure-Michael-Fogus/dp/1617291412/), states. The Clojure programming language can and does bring joy. It is one of the few languages that has causes me to smile not only because of what I create, but also how I create it. However, often this joy doesn't come until you have invested much time in the languages. So here are the fun parts.
 
+As the title of the most famous clojure book, [The Joy of Clojure](http://www.amazon.com/The-Joy-Clojure-Michael-Fogus/dp/1617291412/), states. The Clojure programming language can and does bring joy. It is one of the few languages that has causes me to smile not only because of what I create, but also how I create it. However, often this joy doesn't come until you have invested much time in the languages. So here are the fun parts.
 
 We need to cover just a bit of clojure before we begin.
 This is a hash-map {:a 2}

@@ -1,6 +1,4 @@
 {:title "Interpolating Polygons"
-</div>
-</pre>
  :layout :post
  :tags  ["clojure" "math" "interactive" "visual"]}
 

@@ -1,6 +1,7 @@
 {:title "About"
  :layout :page
  :page-index 0
+ :klipse {}
  :navbar? true}
 
 I'm Nicholas Bardy. I started programming around 2006 when I recieved my first personal comptuer, the glorious TI-89. Programming is my what I do for work, sometimes fun, and hopefully to have a positive effect on the world. After five years of filling the dregs of my Dropbox with endless drafts of blog posts. I decided its time to start finishing some. 
