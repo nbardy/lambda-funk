@@ -1,1 +1,12 @@
-<script>window.location = "/"</script>
+<script>var l = window.location;
+var redirects = {
+  "http://lambdafunk.com/posts-output/2016-01-31-why-clojure/": 
+    "http://lambdafunk.com/2017-01-31-why-clojure/",
+  "http://lambdafunk.com/2016-02-21-Interpolating-Polygons/":
+    "http://lambdafunk.com/2017-02-21-Interpolating-Polygons/"
+}
+var redirect = redirects[window.location]
+if(redirect) {
+  window.location = redirect;
+}
+</script>
