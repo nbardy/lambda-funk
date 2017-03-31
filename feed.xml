@@ -12,11 +12,61 @@ http://lambdafunk.com/
 Programming, mostly
 </description>
 <lastBuildDate>
-Wed, 01 Mar 2017 14:55:34 -0500
+Fri, 31 Mar 2017 00:18:43 -0400
 </lastBuildDate>
 <generator>
 clj-rss
 </generator>
+<item>
+<guid>
+http://lambdafunk.com/2017-03-30-Interactive-Sierpinski-Triangle/
+</guid>
+<link>
+http://lambdafunk.com/2017-03-30-Interactive-Sierpinski-Triangle/
+</link>
+<title>
+Interactive Sierpinski Triangles
+</title>
+<description>
+&lt;p&gt;Some of my earliest memories of the internet are getting lost on endless wikipedia articles, usually some sort of mathematics. One of my fondest memories of this time was the week I discovered fractals. I dove around through each style of fractal with such excitement. This was the first moment I can remember finding joy in mathematics. Little did I know I was learning the ideas of recursive I'd be putting to use later in my career. To pay homage here is a small tribute, some interactive clojure code of one of the simplest fractals, The sierpinksi triangle.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Code samples are live and edibtable enabled by &lt;a href='http://github.com/viebel/klipse'&gt;Klipse&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;div class=&quot;language-klipse &quot;&gt; &lt;pre&gt;&lt;code class=&quot;clojure&quot;&gt;&amp;#40;defn mid-point &amp;#91;p1 p2&amp;#93;
+  &amp;#40;map #&amp;#40;/ &amp;#40;+ % %2&amp;#41; 2&amp;#41; p1 p2&amp;#41;&amp;#41;
+
+&amp;#40;defn next-triangles &amp;#91;&amp;#91;top left right&amp;#93;&amp;#93;
+  &amp;#91;&amp;#91;top &amp;#40;mid-point top left&amp;#41; &amp;#40;mid-point top right&amp;#41;&amp;#93;
+   &amp;#91;&amp;#40;mid-point left top&amp;#41; left &amp;#40;mid-point left right&amp;#41;&amp;#93;
+   &amp;#91;&amp;#40;mid-point right top&amp;#41; &amp;#40;mid-point left right&amp;#41; right&amp;#93;&amp;#93;&amp;#41;
+
+&amp;#40;def canvas &amp;#40;js/document.getElementById &amp;quot;render&amp;quot;&amp;#41;&amp;#41;
+&amp;#40;doto &amp;#40;.getContext canvas &amp;quot;2d&amp;quot;&amp;#41;
+  &amp;#40;aset &amp;quot;strokeStyle&amp;quot; &amp;quot;black&amp;quot;&amp;#41;
+  &amp;#40;.clearRect 0 0 &amp;#40;.-width canvas&amp;#41; &amp;#40;.-height canvas&amp;#41;&amp;#41;&amp;#41;
+
+&amp;#40;defn draw-triangle &amp;#91;canvas &amp;#91;&amp;#91;x1 y1&amp;#93; &amp;#91;x2 y2&amp;#93; &amp;#91;x3 y3&amp;#93;&amp;#93;&amp;#93;
+  &amp;#40;doto &amp;#40;.getContext canvas &amp;quot;2d&amp;quot;&amp;#41;
+    &amp;#40;.beginPath&amp;#41;
+    &amp;#40;.moveTo x1 y1&amp;#41;
+    &amp;#40;.lineTo x2 y2&amp;#41;
+    &amp;#40;.lineTo x3 y3&amp;#41;
+    &amp;#40;.lineTo x1 y1&amp;#41;
+    &amp;#40;.stroke&amp;#41;
+    &amp;#40;.closePath&amp;#41;&amp;#41;&amp;#41;
+
+&amp;#40;defn draw-sierp &amp;#91;canvas initial n&amp;#93;
+  &amp;#40;when &amp;#40;&amp;gt; n 0&amp;#41;
+    &amp;#40;doseq &amp;#91;triangle &amp;#40;next-triangles initial&amp;#41;&amp;#93;
+      &amp;#40;draw-triangle canvas triangle&amp;#41;
+      &amp;#40;draw-sierp canvas triangle &amp;#40;dec n&amp;#41;&amp;#41;&amp;#41;&amp;#41;&amp;#41;
+
+&amp;#40;draw-sierp canvas &amp;#91;&amp;#91;0 500&amp;#93; &amp;#91;250 0&amp;#93; &amp;#91;500 500&amp;#93;&amp;#93; 6&amp;#41;
+ &lt;/code&gt;&lt;/pre&gt; &lt;/div&gt; &lt;canvas width=&quot;500&quot; height=&quot;500&quot; id=&quot;render&quot;&gt;&lt;/canvas&gt;&lt;/p&gt;&lt;p&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;http://app.klipse.tech/css/codemirror.css&quot;&gt;  &lt;/link&gt;&lt;/p&gt;&lt;p&gt;&lt;script&gt; window.klipse_settings = { selector: &quot;.language-klipse&quot; }; &lt;/script&gt; &lt;script src=&quot;http://app.klipse.tech/plugin/js/klipse_plugin.js&quot;&gt;&lt;/script&gt;&lt;/p&gt;
+</description>
+<enclosure>
+
+</enclosure>
+<pubDate>
+Thu, 30 Mar 2017 00:00:00 -0400
+</pubDate>
+</item>
 <item>
 <guid>
 http://lambdafunk.com/2017-02-21-Interpolating-Polygons/
