@@ -15,58 +15,9 @@ This is a hash-map {:a 2}
 This is a vector [1 2 3]
 parenthesis go on the outside in Clojure (+ 1 2)
 
+``
 (nth (filter prime? (range) 9)
 
-<div class="language-klipse" 
-data-external-libs="https://raw.githubusercontent.com/master/clojure/core.async/src/main/clojure/cljs"
-style="visibility: hidden;"> 
-    (ns example.blog
-      (:require-macros [cljs.core.async.macros :refer [go]])
-      (:require [cljs.core.async :refer [put! chan <! >! timeout close!]]))
-    (def dom (atom -1))
-    (def thread-group (atom -))
-    (defn reset-threads! [group-id]
-     (reset! thread-group group-id)
-     (aset js/window (str "tg" group-id) (js/Date.now)))
-    (defn new-thread! []
-      (let [started (aget js/window (str "tg" @thread-group))]
-        (fn [] 
-          (js/console.log 
-           (aget js/window (str "tg" @thread-group)) started)
-          (= (aget js/window (str "tg" @thread-group)) started))))
-
-    (defn render! [content]
-      (let [content 
-            (if (seq? content) 
-              (reduce str content)
-              content)
-            container 
-            (aget (.getElementsByClassName js/document "code-output") @dom)]
-        (aset container "innerHTML" content))
-      content)
-</div>
-
-<div class="language-klipse hidden"> 
-    (defn dot [x] 
-    (str
-    "<div style='width:" x "px;"
-                "height:" x  "px;"
-                "background-color: red;"
-                "float: left;"
-                "margin: 1px;"
-                "'>"
-    "</div>"))
-</div>
-
-<div data-preamble="(reset! dom 0)(reset-threads! 3)" class="language-klipse"> 
-    (go (let [open? (new-thread!)]
-            (while (open?)
-             (<! (timeout 400))
-             (render! (dot 30))
-             (<! (timeout 200))
-             (render! (dot 20)))))
-</div>
-<div class="code-output"></div>
 
 (prime? 
 This is already a pretty great approach to defining a prime, but lets
@@ -201,19 +152,5 @@ On core.async and local event loops
              We store a list of states as render as a point in the transition.
              It is how to describe a state rather than describing a process.
 
-
-
-<link rel="stylesheet" type="text/css" href="http://app.klipse.tech/css/codemirror.css"> </link>
-
-<script>
-window.klipse_settings = {
-selector: ".language-klipse"
-};
-</script>
-<script src="http://app.klipse.tech/plugin/js/klipse_plugin.js"></script>
-
-
-Footnotes
----------
 
 
