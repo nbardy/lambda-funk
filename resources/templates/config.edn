@@ -15,7 +15,7 @@
  :post-date-format   "yyyy-MM-dd"
  :sass-src           nil
  :sass-dest          nil
- :sass-path          "sass"
+ :sass-path          "sassc"
  :compass-path       "compass"
  :theme              "custom"
  :resources          ["img"]
@@ -27,4 +27,5 @@
  :blocks-per-preview 2
  :previews?          false
  :clean-urls?        true
- :hide-future-posts? true}
+ :hide-future-posts? true
+ :debug?             false}
